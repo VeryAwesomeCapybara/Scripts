@@ -1,18 +1,20 @@
-getgenv().TitleName = "Mario Hub"
+getgenv().TitleName = "Nintendo"
 loadstring(game:HttpGet('https://pastebin.com/raw/eGVMDZ5p'))()
 getgenv().Speed = 16;
 
-local Tab = library:AddTab("Main"); 
+local Tab = library:AddTab("Ok"); 
 local Column1 = Tab:AddColumn();
-local Main = Column1:AddSection("Misc")
+local Main = Column1:AddSection("Main")
+local Misc = Column1:AddSection("Misc")
 
 Main:AddDivider("Divider");
 
 Main:AddToggle({text = "Kill Aura", skipflag = true , callback = function(State)
 getgenv().Aura = State -- toggle
+while Aura do wait()
 local lp = game.Players.LocalPlayer 
 for j,k in pairs(game:GetService("Players"):GetPlayers()) do 
-    if(lp.Character.HumanoidRootPart.CFrame - k.Character.HumanoidRootPart.CFrame).magnitude < 21.6 and v ~= lp and k.Character.HumanoidRootPart ~= nil then 
+    if(lp.Character.HumanoidRootPart.Position - k.Character.HumanoidRootPart.Position).magnitude < 21.6 and k ~= lp and k.Character.HumanoidRootPart ~= nil then 
 
 if State then 
     local args = {
@@ -23,11 +25,11 @@ if State then
 }
 
 game:GetService("ReplicatedStorage").Events.SwingTool:FireServer(unpack(args))
-end end end
+end end end end
 end})
 Main:AddToggle({text = "WalkSpeed", skipflag = true , callback = function(State)
 getgenv().WalkSpeed = State;
-getgenv().Speed = library.flags["Speed"];
+getgenv().Speed = library.flags["Speed (Type before)"];
 
 local mt = getrawmetatable(game)
 local old = mt.__newindex
@@ -42,16 +44,70 @@ mt.__newindex = newcclosure(function(t,k,v)
     return old(t,k,v)
 end)
 end})
-Main:AddSlider({text = "", skipflag = true, min = 0, max = 50, value = 25, suffix = "", callback = function(Value)
+Main:AddBox({text = "Speed (Type before)", skipflag = true});
+
+
+Misc:AddToggle({text = "Auto Pick Up", skipflag = true , callback = function(State)
+    pickuploop = State
+      while pickuploop do wait()
+                
+                local Players = game:GetService("Players")
+                local Lp = Players.LocalPlayer
+                local Char = Lp.Character
+                local Root = Char.HumanoidRootPart
+                local uis = game:GetService'UserInputService'
+                
+                
+                local Load;
+                local Pick = function(Character)
+                  local Pos = Root.Position
+                  local Load = {}
+                
+                  for i,v in pairs(workspace:GetChildren()) do
+                    local Players = game:GetService("Players")
+                    local Lp = Players.LocalPlayer
+                    local Char = Lp.Character
+                    local Root = Char.HumanoidRootPart
+                    local uis = game:GetService'UserInputService'
+                      if v:FindFirstChild("Pickup") ~= nil and v.ClassName == "Part" or v.ClassName == "UnionOperation" then
+                          local Object = v.Position
+                          local Mag = (Pos - Object).Magnitude
+                
+                          if Mag < 32 then
+                              table.insert(Load, v)
+                          end
+                      end
+                  end
+                  for i,v in pairs(Load) do
+                    local Players = game:GetService("Players")
+                    local Lp = Players.LocalPlayer
+                    local Char = Lp.Character
+                    local Root = Char.HumanoidRootPart
+                    local uis = game:GetService'UserInputService'
+                      for i=1,10 do
+                          v.Position = Pos
+                          game:GetService'ReplicatedStorage'.Events.Pickup:FireServer(v)
+                      end
+                  end
+                end
+                wait(0.12)
+                
+                      Pick(game.Players.LocalPlayer.Character)
+                      
+                  
+            end
+end})
+
+--[[Main:AddSlider({text = "Speed", skipflag = true, min = 0, max = 50, value = 25, suffix = "", callback = function(Value)
     
 end})
 Main:AddList({text = "Test Dropdown", skipflag = true, value = "Head", values = {"Head", "Torso"}, callback = function(String)
  
 end})
 Main:AddButton({text = "Test Button", callback = function() 
-end})
+end})]]
 
-Main:AddBox({text = "Speed", skipflag = true});
+
 
 -- [Library Settings UI] -----------------------------------------------------------------------------------------------------------------------------------------------------
 local SettingsTab = library:AddTab("Settings"); 
@@ -65,7 +121,7 @@ SettingSection:AddBind({text = "Open / Close", flag = "UI Toggle", nomouse = tru
     library:Close();
 end});
 
-SettingSection:AddColor({text = "Accent Color", flag = "Menu Accent Color", color = Color3.new(230,101,97), callback = function(color)
+SettingSection:AddColor({text = "Accent Color", flag = "Menu Accent Color", color = Color3.new(53534,54543543,43543534), callback = function(color)
     if library.currentTab then
         library.currentTab.button.TextColor3 = color;
     end
