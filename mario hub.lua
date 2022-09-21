@@ -9,18 +9,20 @@ local Misc = Column1:AddSection("Misc")
 
 Main:AddDivider("Divider");
 
+
+
 Main:AddToggle({text = "Kill Aura", skipflag = true , callback = function(State)
 getgenv().Aura = State -- toggle
 while Aura do wait()
 local lp = game.Players.LocalPlayer 
 for j,k in pairs(game:GetService("Players"):GetPlayers()) do 
-    if(lp.Character.HumanoidRootPart.Position - k.Character.HumanoidRootPart.Position).magnitude < 21.6 and k ~= lp and k.Character.HumanoidRootPart ~= nil then 
+    if(lp.Character:WaitForChild("HumanoidRootPart").Position - k.Character:WaitForChild("HumanoidRootPart").Position).magnitude < 21.6 and k ~= lp and k.Character:WaitForChild("HumanoidRootPart") ~= nil then 
 
 if State then 
     local args = {
     [1] = game.ReplicatedStorage.RelativeTime.Value,
     [2] = {
-        [1] = k.Character.HumanoidRootPart,
+        [1] = k.Character:WaitForChild("HumanoidRootPart"),
     }
 }
 
