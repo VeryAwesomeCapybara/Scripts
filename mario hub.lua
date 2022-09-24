@@ -128,7 +128,7 @@ end
 local t = game.Workspace:FindFirstChild("Small Tree")
 local gtpos = t.Trunk.CFrame 
 t.Trunk.CFrame = game.Players[junkyjoe].Character.HumanoidRootPart.CFrame
-wait(0.73)
+wait(0.4)
 Root.CFrame = t.Trunk.CFrame
 Root.CFrame = game.Players[junkyjoe].Character.HumanoidRootPart.CFrame
 wait(.3)
