@@ -107,13 +107,13 @@ end})
 
 
  local PLIST = {}
-
+while true do wait(2.5)
 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
 
 
     if v ~= game.Players.LocalPlayer then table.insert(PLIST,v.Name) end
     
-end
+end end
 Main:AddButton({text = "TP", callback = function() 
         Portal = game.Workspace.LavaPortal
 local Root = game.Players.LocalPlayer.Character.HumanoidRootPart
