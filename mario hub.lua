@@ -18,8 +18,8 @@ function Closest()
     local Close
     local Max = math.huge
     for i,v in pairs(game.Players:GetPlayers()) do
-        if v ~= game.Players.LocalPlayer and v.Character ~= nil  and v.Character.HumanoidRootPart ~= nil then
-            local Mag = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        if v ~= game.Players.LocalPlayer and v.Character ~= nil  and v.Character:WaitForChild("HumanoidRootPart") ~= nil then
+            local Mag = (v.Character:WaitForChild("HumanoidRootPart").Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).Magnitude
             if Mag < Max then
                 Max = Mag
                 Close = v
@@ -37,7 +37,7 @@ while Aura == true do task.wait()
 local args = {
     [1] = game.ReplicatedStorage.RelativeTime.Value,
     [2] = {
-        [1] = Target.Character.HumanoidRootPart,
+        [1] = Target.Character:WaitForChild("HumanoidRootPart"),
     }
 }
 
@@ -147,11 +147,11 @@ end
 
 local t = game.Workspace:FindFirstChild("Small Tree")
 local gtpos = t.Trunk.CFrame 
+t.Trunk.Transparency = 1
 t.Trunk.CFrame = game.Players[junkyjoe].Character.HumanoidRootPart.CFrame
-wait(0.45)
-Root.CFrame = t.Trunk.CFrame
+wait(1)
 Root.CFrame = game.Players[junkyjoe].Character.HumanoidRootPart.CFrame
-wait(.3)
+Root.CFrame = t.Trunk.CFrame
 end})
 
 
