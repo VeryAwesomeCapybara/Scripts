@@ -11,7 +11,7 @@ Main:AddDivider("Divider");
 
 
 
-Main:AddToggle({text = "Kill Aura", skipflag = true , callback = function(State)
+Main:AddToggle({text = "Kill Aura", skipflag = false, flag = "killauralol" , callback = function(State)
 getgenv().Aura = State -- toggle
 while Aura do wait()
 local lp = game.Players.LocalPlayer 
@@ -28,7 +28,11 @@ if State then
 
 game:GetService("ReplicatedStorage").Events.SwingTool:FireServer(unpack(args))
 end end end end
-end})
+end}):AddBind({text = "ON/OFF", skipflag = true, nomouse = false, key = "Q", callback = function(Bind)
+  getgenv().TestToggleBind = Bind
+  if TestToggleBind == false then TestToggleBind = true else TestToggleBind = false end
+      library.flags["killauralol"] = true
+end});
 Main:AddToggle({text = "WalkSpeed", skipflag = true , callback = function(State)
 getgenv().WalkSpeed = State;
 getgenv().Speed = library.flags["Speed (Type before)"];
@@ -100,6 +104,42 @@ Misc:AddToggle({text = "Auto Pick Up", skipflag = true , callback = function(Sta
             end
 end})
 
+
+
+ local PLIST = {}
+
+for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+
+
+    if v ~= game.Players.LocalPlayer then table.insert(PLIST,v.Name) end
+    
+end
+Main:AddButton({text = "TP", callback = function() 
+        Portal = game.Workspace.LavaPortal
+local Root = game.Players.LocalPlayer.Character.HumanoidRootPart
+ for i,v in pairs(Portal:GetDescendants()) do
+    if v.Name == "TouchInterest" and v.Parent then
+        firetouchinterest(Root, v.Parent, 0)
+        wait()
+        firetouchinterest(Root, v.Parent, 1)
+        break;
+        end
+end
+
+local t = game.Workspace:FindFirstChild("Small Tree")
+local gtpos = t.Trunk.CFrame 
+t.Trunk.CFrame = game.Players[junkyjoe].Character.HumanoidRootPart.CFrame
+wait(0.5)
+Root.CFrame = t.Trunk.CFrame
+Root.CFrame = game.Players[junkyjoe].Character.HumanoidRootPart.CFrame
+wait(.3)
+end})
+
+
+
+Main:AddList({text = "Teleport To:", skipflag = true,value = PLIST, values = PLIST, callback = function(String)
+getgenv().junkyjoe = String
+end})
 --[[Main:AddSlider({text = "Speed", skipflag = true, min = 0, max = 50, value = 25, suffix = "", callback = function(Value)
     
 end})
