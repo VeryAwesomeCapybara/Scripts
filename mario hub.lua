@@ -98,7 +98,7 @@ Misc:AddToggle({text = "Auto Pick Up", skipflag = true , callback = function(Sta
                           local Object = v.Position
                           local Mag = (Pos - Object).Magnitude
                 
-                          if Mag < 32 then
+                          if Mag < 25 then
                               table.insert(Load, v)
                           end
                       end
